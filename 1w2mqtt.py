@@ -26,21 +26,17 @@
 #OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 from w1thermsensor import W1ThermSensor
 import paho.mqtt.publish as publish
 import time
 
-def getTempInC():
-	tempsensor = W1ThermSensor()
-	temp_in_c = tempsensor.get_temperature()
-	return temp_in_c
-
-
-temp = getTempInC()
-
 while True:
-	publish.single("sensors/home/temp/1", temp, hostname="localhost")
+	#get a list of sensors:
+	sensors = W1ThermSensor.get_available_sensors()
+	print sensors
+
+	for sensor in sensors:
+		print ("Sensor %s has temp %f at %f" % (sensor.id, sensor.get_temperature(),time.time()))
+		publish.single("sensors/temperature/%s" % sensor.id, "%s %s" % (sensor.get_temperature(),time.time()), hostname="localhost")
+
 	time.sleep(5)
-
-
