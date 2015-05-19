@@ -31,21 +31,39 @@
 
 Command Line Arguments:
 
--b	Broker wihch 1w2mqtt should connect.
--t  Base topic which 1w2mqtt should publish messages.
--v  Verbose
+-b --broker	Broker wihch 1w2mqtt should connect.
+-d --delay Delay between sensor readings.
+-t --topic  Base topic which 1w2mqtt should publish messages.
+-v --verbose  Verbose
 """
+
 from w1thermsensor import W1ThermSensor
+import argparse
 import paho.mqtt.publish as publish
 import time
+
+#parse command line arguments
+parser = argparse.ArgumentParser()
+parser.add_argument("-d", "--delay", help="Time to delay between sensor readings.", type=int, default=5)
+parser.add_argument("-v", "--verbose", help="Enable Verbose output.", action="store_true")
+
+
+args = parser.parse_args()
+
+if args.verbose:
+	print "Additional Verbosity Enabled."
+
 
 while True:
 	#get a list of sensors:
 	sensors = W1ThermSensor.get_available_sensors()
-	print sensors
+	if args.verbose:
+		print sensors
 
 	for sensor in sensors:
-		print ("Sensor %s has temp %f at %f" % (sensor.id, sensor.get_temperature(),time.time()))
+		if args.verbose:
+			print ("Sensor %s has temp %f at %f" % (sensor.id, sensor.get_temperature(),time.time()))
+
 		publish.single("sensors/temperature/%s" % sensor.id, "%s %s" % (sensor.get_temperature(),time.time()), hostname="localhost")
 
-	time.sleep(5)
+	time.sleep(args.delay)

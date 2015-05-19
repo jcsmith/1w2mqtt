@@ -8,6 +8,7 @@ python daemon to expose Dallas One Wire temperature sensor readings to an MQTT t
 
 ##Command Line Arguments
 
-- -b Broker which 1w2mqtt shold connect.
-- -t Topic to which 1w2mqtt should publish messages.
-- -v Enable Verbose Logging.
+- -b --broker Broker which 1w2mqtt shold connect.
+- -d --delay delay Delay between sensor readings.
+- -t --topic Topic to which 1w2mqtt should publish messages.
+- -v --verbose Enable Verbose Logging.
