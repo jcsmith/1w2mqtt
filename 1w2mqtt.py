@@ -26,6 +26,15 @@
 #OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+"""
+1w2mqtt.py - Publish temperature readings from a 1 wire temperature sensor as an mqtt message.
+
+Command Line Arguments:
+
+-b	Broker wihch 1w2mqtt should connect.
+-t  Base topic which 1w2mqtt should publish messages.
+-v  Verbose
+"""
 from w1thermsensor import W1ThermSensor
 import paho.mqtt.publish as publish
 import time
