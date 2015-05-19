@@ -44,6 +44,7 @@ import time
 
 #parse command line arguments
 parser = argparse.ArgumentParser()
+parser.add_argument("-b", "--broker", help="Broker to connect.", default="localhost")
 parser.add_argument("-d", "--delay", help="Time to delay between sensor readings.", type=int, default=5)
 parser.add_argument("-v", "--verbose", help="Enable Verbose output.", action="store_true")
 
@@ -64,6 +65,6 @@ while True:
 		if args.verbose:
 			print ("Sensor %s has temp %f at %f" % (sensor.id, sensor.get_temperature(),time.time()))
 
-		publish.single("sensors/temperature/%s" % sensor.id, "%s %s" % (sensor.get_temperature(),time.time()), hostname="localhost")
+		publish.single("sensors/temperature/%s" % sensor.id, "%s %s" % (sensor.get_temperature(),time.time()), hostname=args.broker)
 
 	time.sleep(args.delay)
