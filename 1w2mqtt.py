@@ -62,12 +62,13 @@ while True:
 		print sensors
 
 	for sensor in sensors:
+		reading = sensor.get_temperature()
 		if args.verbose:
-			print ("Sensor %s has temp %f at %f" % (sensor.id, sensor.get_temperature(),time.time()))
+			print ("Sensor %s has temp %f at %f" % (sensor.id, reading,time.time()))
 
 
 		try:
-			publish.single("sensors/temperature/%s" % sensor.id, "%s %s" % (sensor.get_temperature(),time.time()), hostname=args.broker)
+			publish.single("sensors/temperature/%s" % sensor.id, "%s %s" % (reading,time.time()), hostname=args.broker)
 		
 		except:
 			print "Error connecting to %s" % args.broker
