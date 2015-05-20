@@ -31,10 +31,10 @@
 
 Command Line Arguments:
 
--b --broker	Broker wihch 1w2mqtt should connect.
--d --delay Delay between sensor readings.
+-b --broker	Broker wihch 1w2mqtt should connect. 
+-d --delay Delay between sensor readings. - Implemented.
 -t --topic  Base topic which 1w2mqtt should publish messages.
--v --verbose  Verbose
+-v --verbose  Verbose - Implemented - might add more messages.
 """
 
 from w1thermsensor import W1ThermSensor
@@ -65,6 +65,11 @@ while True:
 		if args.verbose:
 			print ("Sensor %s has temp %f at %f" % (sensor.id, sensor.get_temperature(),time.time()))
 
-		publish.single("sensors/temperature/%s" % sensor.id, "%s %s" % (sensor.get_temperature(),time.time()), hostname=args.broker)
+
+		try:
+			publish.single("sensors/temperature/%s" % sensor.id, "%s %s" % (sensor.get_temperature(),time.time()), hostname=args.broker)
+		
+		except:
+			print "Error connecting to %s" % args.broker
 
 	time.sleep(args.delay)
