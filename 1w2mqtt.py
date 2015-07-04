@@ -63,17 +63,24 @@ while True:
 	sensors = W1ThermSensor.get_available_sensors()
 	if len(sensors) == 0:
 		logging.warn("No Sensors Found.  Please configure at least one sensor.")
+		time.sleep(args.delay)
 		continue
 
 	for sensor in sensors:
-		reading = sensor.get_temperature()
-		logging.debug ("Sensor %s has temp %f at %f" % (sensor.id, reading,time.time()))
+		try:
+			reading = sensor.get_temperature()
+			logging.debug ("Sensor %s has temp %f at %f" % (sensor.id, reading,time.time()))
+		except:
+			logging.error("Error reading sensor %s." % (sensor.id))
+			continue
+			
 
 
 		try:
 			publish.single("sensors/temperature/%s" % sensor.id, "%s %s" % (reading,time.time()), hostname=args.broker)
 		
 		except:
-			logging.error("Error connecting to %s" % args.broker)
+			logging.error("Error connecting to %s." % args.broker)
+			continue
 
 	time.sleep(args.delay)
