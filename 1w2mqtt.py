@@ -61,8 +61,9 @@ logging.debug("Additional Verbosity Enabled.")
 while True:
 	#get a list of sensors:
 	sensors = W1ThermSensor.get_available_sensors()
-	if args.verbose:
-		print sensors
+	if len(sensors) == 0:
+		logging.warn("No Sensors Found.  Please configure at least one sensor.")
+		continue
 
 	for sensor in sensors:
 		reading = sensor.get_temperature()
@@ -73,6 +74,6 @@ while True:
 			publish.single("sensors/temperature/%s" % sensor.id, "%s %s" % (reading,time.time()), hostname=args.broker)
 		
 		except:
-			print "Error connecting to %s" % args.broker
+			logging.error("Error connecting to %s" % args.broker)
 
 	time.sleep(args.delay)
