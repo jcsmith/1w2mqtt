@@ -39,7 +39,7 @@ Command Line Arguments:
 
 from w1thermsensor import W1ThermSensor
 import argparse
-import logger
+import logging
 import paho.mqtt.publish as publish
 import time
 
