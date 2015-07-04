@@ -52,11 +52,7 @@ parser.add_argument("-v", "--verbose", help="Enable Verbose output.", action="st
 
 args = parser.parse_args()
 
-
-
 if args.verbose:
-	#print "Additional Verbosity Enabled."
-	#set up debug logging
 	logging.basicConfig(level=logging.DEBUG)
 
 logging.debug("Additional Verbosity Enabled.")
@@ -70,8 +66,7 @@ while True:
 
 	for sensor in sensors:
 		reading = sensor.get_temperature()
-		if args.verbose:
-			print ("Sensor %s has temp %f at %f" % (sensor.id, reading,time.time()))
+		logging.debug ("Sensor %s has temp %f at %f" % (sensor.id, reading,time.time()))
 
 
 		try:
