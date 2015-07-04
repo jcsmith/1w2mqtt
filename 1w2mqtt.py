@@ -31,10 +31,10 @@
 
 Command Line Arguments:
 
--b --broker	Broker wihch 1w2mqtt should connect. 
--d --delay Delay between sensor readings. - Implemented.
--t --topic  Base topic which 1w2mqtt should publish messages.
--v --verbose  Verbose - Implemented - might add more messages.
+-b --broker, Broker wihch 1w2mqtt should connect. 
+-d --delay, Delay between sensor readings.
+-t --topic, Base topic which 1w2mqtt should publish messages.
+-v --verbose, Enable Verbose output.
 """
 
 from w1thermsensor import W1ThermSensor
